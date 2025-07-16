@@ -20,7 +20,7 @@ export default function App() {
           <header className="bg-gray-900 text-white py-8 shadow-md">
             <div className="max-w-6xl mx-auto px-4 text-center">
               <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-                Guía de Comercios
+                Guía de Pymes
               </h1>
               <p className="text-gray-300 mt-2">
                 Descubre negocios cerca de ti 🌍

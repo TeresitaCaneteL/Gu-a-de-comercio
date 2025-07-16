@@ -25,6 +25,9 @@ type Comercio = {
     imagenExtra3?: {
       node?: { sourceUrl?: string };
     };
+    imagenExtra4?: {
+      node?: { sourceUrl?: string };
+    };
   };
 };
 
@@ -52,6 +55,7 @@ const GET_COMERCIOS = gql`
             imagenExtra1 { node { sourceUrl } }
             imagenExtra2 { node { sourceUrl } }
             imagenExtra3 { node { sourceUrl } }
+            imagenExtra4 { node { sourceUrl } }
           }
         }
       }
@@ -93,6 +97,7 @@ export default function Comercios() {
       if (cat) cats.add(cat);
     });
     return Array.from(cats);
+
   }, [data]);
 
   // Filtrar localmente lo que ya llegó
@@ -109,9 +114,11 @@ export default function Comercios() {
       const cat = normalize(Array.isArray(raw) ? raw[0] : raw || '');
       const title = normalize(node.title);
 
+
       const matchText = !term || title.includes(term) || cat.includes(term);
       const matchCat = selectedCats.length === 0 || selectedCats.includes(cat);
       return matchText && matchCat;
+
     });
   }, [edges, filter]);
 
@@ -137,9 +144,8 @@ export default function Comercios() {
             key={node.slug}
             slug={node.slug}
             title={node.title}
-            categoria={Array.isArray(node.camposComercio?.categoria)
-              ? node.camposComercio.categoria[0]
-              : node.camposComercio?.categoria ?? ''}
+            categoria={node.camposComercio?.categoria ?? []}
+
             direccion={node.camposComercio?.direccion ?? ''}
             telefono={node.camposComercio?.telefono ?? ''}
             sitioWeb={node.camposComercio?.sitioWeb ?? ''}
@@ -150,7 +156,11 @@ export default function Comercios() {
             imagenExtra1Url={node.camposComercio?.imagenExtra1?.node?.sourceUrl ?? ''}
             imagenExtra2Url={node.camposComercio?.imagenExtra2?.node?.sourceUrl ?? ''}
             imagenExtra3Url={node.camposComercio?.imagenExtra3?.node?.sourceUrl ?? ''}
+            imagenExtra4Url={node.camposComercio?.imagenExtra3?.node?.sourceUrl ?? ''}
+
+
         />
+
         ))}
       </div>
 

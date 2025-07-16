@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { FaMapMarkerAlt, FaPhoneAlt, FaGlobe, FaTags, FaArrowLeft } from 'react-icons/fa';
-import { FaClock } from 'react-icons/fa';
+import { FaArrowLeft, FaTags, FaMapMarkerAlt, FaPhoneAlt, FaGlobe, FaClock } from "react-icons/fa";
+
+
 
 const GET_COMERCIO_DETAIL = gql`
   query GetComercio($slug: String!) {
@@ -14,6 +15,7 @@ const GET_COMERCIO_DETAIL = gql`
         imagenExtra1 { node { sourceUrl } }
         imagenExtra2 { node { sourceUrl } }
         imagenExtra3 { node { sourceUrl } }
+        imagenExtra4 { node { sourceUrl } }
         direccion
         telefono
         sitioWeb
@@ -46,8 +48,10 @@ export default function ComercioDetalle() {
     c.imagenExtra?.node?.sourceUrl,
     c.imagenExtra1?.node?.sourceUrl,
     c.imagenExtra2?.node?.sourceUrl,
-    c.imagenExtra3?.node?.sourceUrl
+    c.imagenExtra3?.node?.sourceUrl,
+    c.imagenExtra4?.node?.sourceUrl
   ].filter(Boolean) as string[];
+  console.log('Categoría recibida:', c.categoria);
 
   return (
 
@@ -86,7 +90,20 @@ export default function ComercioDetalle() {
           <div className="space-y-4 md:col-span-1 text-lg text-gray-700">
             <p className="flex items-start gap-3">
               <FaTags className="mt-1 text-yellow-500" />
-              <span><strong>Categoría:</strong> {c.categoria}</span>
+              <span>
+                <strong>Categoría:</strong>{' '}
+                {Array.isArray(c.categoria)
+                  ? (c.categoria as string[])
+                    .map((item: string) =>
+                      item.replace(/^.*?:\s*/, '') // quita todo antes de ": "
+                    )
+                    .filter(Boolean)
+                    .join(', ')
+                  : c.categoria}
+              </span>
+
+
+
             </p>
             <p className="flex items-start gap-3">
               <FaMapMarkerAlt className="mt-1 text-red-500" />

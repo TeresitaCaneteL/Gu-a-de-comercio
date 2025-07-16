@@ -35,19 +35,23 @@ export default function SearchFilter({ categories, onFilter }: Props) {
       />
 
       <div className="flex flex-wrap gap-4">
-        {categories.map(cat => (
-          <label key={cat} className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id={cat}
-              checked={selected.includes(cat)}
-              onChange={handleCheckbox}
-              className="h-4 w-4 text-indigo-600"
-            />
-            <span className="text-gray-700">{cat}</span>
-          </label>
-        ))}
+        {categories.map((cat: string) => {
+          const label = cat.replace(/^.*?:\s*/, ''); // quita todo antes de ": "
+          return (
+            <label key={cat} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={cat}
+                checked={selected.includes(cat)}
+                onChange={handleCheckbox}
+                className="h-4 w-4 text-indigo-600"
+              />
+              <span className="text-gray-700">{label}</span>
+            </label>
+          );
+        })}
       </div>
+
     </div>
   );
 }
