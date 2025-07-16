@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 export const client = new ApolloClient({
-  uri: "https://clientes.estudioresortera.cl/graphql",
+  uri: import.meta.env.VITE_API_URL,
   cache: new InMemoryCache(),
 });
+
